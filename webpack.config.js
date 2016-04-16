@@ -13,8 +13,7 @@ var uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({
 });
 
 module.exports = {
-  devtool: false,
-  // devtool: 'cheap-module-eval-source-map',
+  devtool: 'cheap-module-eval-source-map',
   entry: {
     vendor: [
       'react',
@@ -25,10 +24,10 @@ module.exports = {
       'classnames',
       'webpack-hot-middleware/client',
     ],
-    index: ['./index']
+    index: ['./src/modules/application/index.js']
   },
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'public'),
     filename: '[name].js',
     publicPath: '/static/'
   },
@@ -36,13 +35,12 @@ module.exports = {
     commonsPlugin,
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    // uglifyJsPlugin
   ],
   module: {
     loaders: [
       {
         test: /\.js$/,
-        loaders: [ 'babel' ],
+        loaders: [ 'babel?' + JSON.stringify({presets: ['react', 'es2015', 'stage-0']}) ],
         exclude: /node_modules/,
         include: __dirname
       },
