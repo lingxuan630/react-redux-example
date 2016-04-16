@@ -9,6 +9,9 @@ class App extends Component {
     return (
       <div>
         Hello
+        <div>
+          {React.cloneElement(this.props.children || <div/>)}
+        </div>
       </div>
     )
   }
